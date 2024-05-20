@@ -1,0 +1,24 @@
+services:
+  test-dotnet-noinfra-core-tests:
+    build:
+      target: development
+    image: test-dotnet-noinfra-core-tests-development
+    container_name: test-dotnet-noinfra-core-tests
+    user: root
+    entrypoint: sh -c "cd /home/dotnet && chown -R dotnet:dotnet . && su dotnet -c 'dotnet watch --project test/Test.Dotnet.Noinfra.Core.Tests/Test.Dotnet.Noinfra.Core.Tests.csproj test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./test-output/'"
+    volumes:
+      - ./src/Test.Dotnet.Noinfra.Core:/home/dotnet/src/Test.Dotnet.Noinfra.Core
+      - ./test/Test.Dotnet.Noinfra.Core.Tests:/home/dotnet/test/Test.Dotnet.Noinfra.Core.Tests
+      - ./test-output:/home/dotnet/Test.Dotnet.Noinfra.Core.Tests/test-output
+
+  test-dotnet-noinfra-api-tests:
+    build:
+      target: development
+    image: test-dotnet-noinfra-api-tests-development
+    container_name: test-dotnet-noinfra-api-tests
+    user: root
+    entrypoint: sh -c "cd /home/dotnet && chown -R dotnet:dotnet . && su dotnet -c 'dotnet watch --project test/Test.Dotnet.Noinfra.Api.Tests/Test.Dotnet.Noinfra.Api.Tests.csproj test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./test-output/'"
+    volumes:
+      - ./src/Test.Dotnet.Noinfra.Api:/home/dotnet/src/Test.Dotnet.Noinfra.Api
+      - ./test/Test.Dotnet.Noinfra.Api.Tests:/home/dotnet/test/Test.Dotnet.Noinfra.Api.Tests
+      - ./test-output:/home/dotnet/Test.Dotnet.Noinfra.Api.Tests/test-output

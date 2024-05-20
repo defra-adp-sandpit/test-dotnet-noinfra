@@ -1,0 +1,10 @@
+services:
+  test-dotnet-noinfra:
+    build:
+      context: .
+      target: production
+    image: test-dotnet-noinfra
+    container_name: test-dotnet-noinfra
+    environment:
+      AppInsights__ConnectionString: ${APPINSIGHTS_CONNECTIONSTRING}
+      AppInsights__CloudRole: test-dotnet-noinfra-local

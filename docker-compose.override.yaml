@@ -1,0 +1,12 @@
+# This override file should be used when running this service in isolation
+# to provide required sibling services for local testing
+
+services:
+  test-dotnet-noinfra:
+    build:
+      target: development
+    ports:
+      - "3007:3007"
+    volumes:
+      - ./src/Test.Dotnet.Noinfra.Api:/home/dotnet/src/Test.Dotnet.Noinfra.Api
+      - ./src/Test.Dotnet.Noinfra.Core:/home/dotnet/src/Test.Dotnet.Noinfra.Core

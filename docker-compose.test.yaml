@@ -1,0 +1,16 @@
+services:
+  test-dotnet-noinfra:
+    build:
+      target: development
+    image: test-dotnet-noinfra-development
+    container_name: test-dotnet-noinfra-test
+    user: root
+    entrypoint: sh -c "cd /home/dotnet && chown -R dotnet:dotnet . && su dotnet -c 'dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./test-output/'"
+    volumes:
+      - ./Test.Dotnet.Noinfra.sln:/home/dotnet/Test.Dotnet.Noinfra.sln
+      - ./src/Test.Dotnet.Noinfra.Core:/home/dotnet/src/Test.Dotnet.Noinfra.Core
+      - ./test/Test.Dotnet.Noinfra.Core.Tests:/home/dotnet/test/Test.Dotnet.Noinfra.Core.Tests
+      - ./src/Test.Dotnet.Noinfra.Api:/home/dotnet/src/Test.Dotnet.Noinfra.Api
+      - ./test/Test.Dotnet.Noinfra.Api.Tests:/home/dotnet/test/Test.Dotnet.Noinfra.Api.Tests
+      - ./test/Test.Dotnet.Noinfra.Api.Tests/test-output:/home/dotnet/test/Test.Dotnet.Noinfra.Api.Tests/test-output
+      - ./test/Test.Dotnet.Noinfra.Core.Tests/test-output:/home/dotnet/test/Test.Dotnet.Noinfra.Core.Tests/test-output
